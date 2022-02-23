@@ -1,4 +1,4 @@
-# GnomishInboxShrinker
+# Gnomish Inbox Shrinker
 
 This is a fan update of [Gnomish Inbox Shrinker](https://github.com/TekNoLogic/GnomishInboxShrinker) by [TekNoLogic](https://github.com/TekNoLogic) for modern retail WoW.
 
