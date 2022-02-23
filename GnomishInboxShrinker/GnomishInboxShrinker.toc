@@ -1,6 +1,6 @@
-## Interface: 30300
+## Interface: 90200
 
-## Author: Ammo
+## Author: Ammo, updated by Leo
 ## Title: Gnomish Inbox Shrinker
 ## Notes: A simple, scrolling inbox
 ## X-Credits: Ammo's BetterInbox

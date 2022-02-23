@@ -3,7 +3,7 @@
 	GetInboxNumItems() - how many mails do we have
 	GetInboxHeaderInfo(index) - info on mail
 	GetInboxInvoiceInfo(index) - is this an auction hous invoice?
-	TakeInboxMoney(index) - get the omoney
+	TakeInboxMoney(index) - get the money
 	TakeInboxItem(index, attachIndex)
 --]]
 
@@ -23,7 +23,7 @@
 
 local myname, ns = ...
 
-local ICONSIZE, NUMROWS = 17, 17
+local ICONSIZE, NUMROWS = 17, 16
 
 local BetterInbox = LibStub("AceAddon-3.0"):NewAddon("BetterInbox", "AceEvent-3.0", "AceHook-3.0", "AceTimer-3.0")
 
@@ -71,7 +71,13 @@ end
 local justshown
 function BetterInbox:MAIL_SHOW()
 	-- Hide Blizzard Elements we're replacing
-	for i=1,7 do _G["MailItem"..i]:Hide() end
+	_G["MailItem1"]:Hide()
+	_G["MailItem2"]:Hide()
+	_G["MailItem3"]:Hide()
+	_G["MailItem4"]:Hide()
+	_G["MailItem5"]:Hide()
+	_G["MailItem6"]:Hide()
+	_G["MailItem7"]:Hide()
 	InboxPrevPageButton:Hide()
 	InboxNextPageButton:Hide()
 
@@ -117,15 +123,17 @@ end
 
 local rows = {}
 function BetterInbox:UpdateInboxScroll()
-	local numitems = GetInboxNumItems()
-	local offset = self.scroll:GetValue()
+	if self.scroll then
+		local numitems = GetInboxNumItems()
+		local offset = self.scroll:GetValue()
 
-	self.scroll:SetMinMaxValues(0, math.max(0, numitems-NUMROWS))
+		self.scroll:SetMinMaxValues(0, math.max(0, numitems-NUMROWS))
 
-	for i,row in pairs(rows) do
-		local index = i + offset
-		if index <= numitems then row:Update(index)
-		else row:Hide() end
+		for i,row in pairs(rows) do
+			local index = i + offset
+			if index <= numitems then row:Update(index)
+			else row:Hide() end
+		end
 	end
 end
 
@@ -200,7 +208,8 @@ function BetterInbox:SetupGUI()
 			OpenMailFrame.updateButtonPositions = true
 			OpenMail_Update()
 			ShowUIPanel(OpenMailFrame)
-			PlaySound("igSpellBookOpen")
+			OpenMailFrameInset:SetPoint("TOPLEFT", 4, -80)
+			PlaySound(829)
 		else
 			InboxFrame.openMailID = 0
 			HideUIPanel(OpenMailFrame)
@@ -212,6 +221,10 @@ function BetterInbox:SetupGUI()
 		local packageIcon, stationeryIcon, sender, subject, money, CODAmount,
 			daysLeft, itemCount, wasRead, wasReturned, textCreated, canReply, isGM,
 			itemQuantity = GetInboxHeaderInfo(i)
+
+		-- Separate realm from sender name
+		local senderRealm = ""
+		sender, senderRealm = strsplit("-", sender or "", 2)
 
 		subject = subject:gsub("Auction successful", "Sold")
 		subject = subject:gsub("Auction expired", "Failed")
@@ -229,8 +242,7 @@ function BetterInbox:SetupGUI()
 		-- Format expiration time
 		self.expire:SetText(
 			(daysLeft >= 1 and "|cff00ff00" or "|cffff0000")..
-			ShortTime(daysLeft)..
-			(InboxItemCanDelete(i) and " |cffff0000d" or " |cffffff00r")
+			ShortTime(daysLeft)
 		)
 
 		self.index = i
