@@ -25,10 +25,15 @@ local myname, ns = ...
 
 local ICONSIZE, NUMROWS = 17, 16
 
-local BetterInbox = LibStub("AceAddon-3.0"):NewAddon("BetterInbox", "AceEvent-3.0", "AceHook-3.0", "AceTimer-3.0")
+local BetterInbox = LibStub("AceAddon-3.0"):NewAddon(myname, "AceEvent-3.0", "AceHook-3.0", "AceTimer-3.0")
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BetterInbox")
+local L = LibStub("AceLocale-3.0"):GetLocale(myname)
 
+local return_time_fmt     = CreateTextureMarkup(255354, 64, 64, nil, 10, 0, 1, 0, 1).."%s"
+local delete_time_fmt     = CreateTextureMarkup(255352, 64, 64, nil, 10, 0, 1, 0, 1).."%s"
+local _,_,auction_sold    = _G.AUCTION_SOLD_MAIL_SUBJECT:find("([^:]+)")
+local _,_,auction_expired = _G.AUCTION_EXPIRED_MAIL_SUBJECT:find("([^:]+)")
+local _,_,auction_won     = _G.AUCTION_WON_MAIL_SUBJECT:find("([^:]+)")
 
 local function GSC(cash)
 	if not cash then return end
@@ -41,10 +46,21 @@ local function GSC(cash)
 end
 
 
-local function ShortTime(days)
-	if days >= 1 then return math.floor(days).."d" end
-	if (days*24) >= 1 then return string.format("%.1fh", days*24) end
-	return math.floor(days*24*60).."m"
+local function ShortTime(days, wasReturned)
+	local timeleft
+	if days >= 1 then
+		timeleft = math.floor(days).."d"
+	elseif (days*24) >= 1 then
+		timeleft = string.format("%.1fh", days*24)
+	else
+		timeleft = math.floor(days*24*60).."m"
+	end
+	if wasReturned then
+		timeleft = format(delete_time_fmt,timeleft)
+	else
+		timeleft = format(return_time_fmt,timeleft)
+	end
+	return timeleft
 end
 
 
@@ -226,9 +242,9 @@ function BetterInbox:SetupGUI()
 		local senderRealm = ""
 		sender, senderRealm = strsplit("-", sender or "", 2)
 
-		subject = subject:gsub("Auction successful", "Sold")
-		subject = subject:gsub("Auction expired", "Failed")
-		subject = subject:gsub("Auction won", "Won")
+		subject = subject:gsub(auction_sold, "Sold")
+		subject = subject:gsub(auction_expired, "Failed")
+		subject = subject:gsub(auction_won, "Won")
 
 		self.subject:SetText(subject)
 		self.icon:SetTexture((not isGM and packageIcon) or stationeryIcon)
@@ -242,7 +258,7 @@ function BetterInbox:SetupGUI()
 		-- Format expiration time
 		self.expire:SetText(
 			(daysLeft >= 1 and "|cff00ff00" or "|cffff0000")..
-			ShortTime(daysLeft)
+			ShortTime(daysLeft, wasReturned)
 		)
 
 		self.index = i

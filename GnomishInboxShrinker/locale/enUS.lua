@@ -1,4 +1,5 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BetterInbox", "enUS", true)
+local myname, ns = ...
+local L = LibStub("AceLocale-3.0"):NewLocale(myname, "enUS", true)
 
 if not L then return end
 
