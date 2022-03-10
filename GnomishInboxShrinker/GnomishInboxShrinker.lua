@@ -46,7 +46,7 @@ local function GSC(cash)
 end
 
 
-local function ShortTime(days, wasReturned)
+local function ShortTime(days, willDelete)
 	local timeleft
 	if days >= 1 then
 		timeleft = math.floor(days).."d"
@@ -55,7 +55,7 @@ local function ShortTime(days, wasReturned)
 	else
 		timeleft = math.floor(days*24*60).."m"
 	end
-	if wasReturned then
+	if willDelete then
 		timeleft = format(delete_time_fmt,timeleft)
 	else
 		timeleft = format(return_time_fmt,timeleft)
@@ -248,7 +248,9 @@ function BetterInbox:SetupGUI()
 
 		self.subject:SetText(subject)
 		self.icon:SetTexture((not isGM and packageIcon) or stationeryIcon)
-		self.sender:SetText((sender or "<unknown>"):gsub("Auction House", "AH"))
+		local sender, isAH = (sender or "<unknown>"):gsub("Auction House", "AH")
+		isAH = isAH > 0
+		self.sender:SetText(sender)
 		self.money:SetText(
 			money > 0 and GSC(money)
 			or CODAmount > 0 and ("|cffff0000COD (".. GSC(CODAmount).. "|cffff0000)")
@@ -258,7 +260,7 @@ function BetterInbox:SetupGUI()
 		-- Format expiration time
 		self.expire:SetText(
 			(daysLeft >= 1 and "|cff00ff00" or "|cffff0000")..
-			ShortTime(daysLeft, wasReturned)
+			ShortTime(daysLeft, (wasReturned or isGM or isAH))
 		)
 
 		self.index = i
