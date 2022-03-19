@@ -35,24 +35,26 @@ local _,_,auction_sold    = _G.AUCTION_SOLD_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_expired = _G.AUCTION_EXPIRED_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_won     = _G.AUCTION_WON_MAIL_SUBJECT:find("([^:]+)")
 
+local coin_gold, coin_silver, coin_copper = CreateAtlasMarkup("auctionhouse-icon-coin-gold"), CreateAtlasMarkup("auctionhouse-icon-coin-silver"), CreateAtlasMarkup("auctionhouse-icon-coin-copper")
+
 local function GSC(money)
 	if not money then return end
 	if money < 100 then
-        money = money .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-copper")
+        money = money .. " " .. coin_copper
     elseif money < 10000 then
         local copper = money % 100
-        money = floor(money / 100) .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-silver")
+        money = floor(money / 100) .. " " .. coin_silver
         if copper > 0 then
-            money = money .. "  " .. copper .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-copper")
+            money = money .. "  " .. copper .. " " .. coin_copper
         end
     elseif money < 1000000 then
         local silver = floor((money % 10000) / 100)
-        money = floor(money / 100 / 100) .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-gold")
+        money = floor(money / 100 / 100) .. " " .. coin_gold
         if silver > 0 then
-            money = money .. "  " .. silver .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-silver")
+            money = money .. "  " .. silver .. " " .. coin_silver
         end
     else
-        money = FormatLargeNumber(floor(money / 100 / 100)) .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-gold")
+        money = FormatLargeNumber(floor(money / 100 / 100)) .. " " .. coin_gold
     end
     return money
 end
@@ -263,7 +265,7 @@ function BetterInbox:SetupGUI()
 
 		self.subject:SetText(subject)
 		self.icon:SetTexture((not isGM and packageIcon) or stationeryIcon)
-		local sender, isAH = (sender or "<unknown>"):gsub("Auction House", "AH")
+		local sender, isAH = (sender or "|cff9d9d9dUnknown|r"):gsub("Auction House", "AH")
 		isAH = isAH > 0
 		self.sender:SetText(sender)
 		self.money:SetText(
