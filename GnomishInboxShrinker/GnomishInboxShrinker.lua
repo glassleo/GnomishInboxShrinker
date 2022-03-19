@@ -252,7 +252,10 @@ function BetterInbox:SetupGUI()
 
 		-- Separate realm from sender name
 		local senderRealm = ""
-		sender, senderRealm = strsplit("-", sender or "", 2)
+
+		if not sender == "Great-father Winter" then
+			sender, senderRealm = strsplit("-", sender or "", 2)
+		end
 
 		subject = subject:gsub(auction_sold, "Sold")
 		subject = subject:gsub(auction_expired, "Failed")
