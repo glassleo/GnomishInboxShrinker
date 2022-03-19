@@ -30,19 +30,31 @@ local BetterInbox = LibStub("AceAddon-3.0"):NewAddon(myname, "AceEvent-3.0", "Ac
 local L = LibStub("AceLocale-3.0"):GetLocale(myname)
 
 local return_time_fmt     = "%s"
-local delete_time_fmt     = "%s "..CreateAtlasMarkup("services-icon-warning", 14, 14, 0, -1)
+local delete_time_fmt     = "%s " .. CreateAtlasMarkup("services-icon-warning", 14, 14, 0, -1)
 local _,_,auction_sold    = _G.AUCTION_SOLD_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_expired = _G.AUCTION_EXPIRED_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_won     = _G.AUCTION_WON_MAIL_SUBJECT:find("([^:]+)")
 
-local function GSC(cash)
-	if not cash then return end
-	local g, s, c = floor(cash/10000), floor((cash/100)%100), cash%100
-	if g > 0 then
-		return string.format("|cffffd700%d.|cffc7c7cf%02d.|cffeda55f%02d", g, s, c)
-	elseif s > 0 then
-		return string.format("|cffc7c7cf%d.|cffeda55f%02d", s, c)
-	else return string.format("|cffc7c7cf%d", c) end
+local function GSC(money)
+	if not money then return end
+	if money < 100 then
+        money = money .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-copper")
+    elseif money < 10000 then
+        local copper = money % 100
+        money = floor(money / 100) .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-silver")
+        if copper > 0 then
+            money = money .. "  " .. copper .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-copper")
+        end
+    elseif money < 1000000 then
+        local silver = floor((money % 10000) / 100)
+        money = floor(money / 100 / 100) .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-gold")
+        if silver > 0 then
+            money = money .. "  " .. silver .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-silver")
+        end
+    else
+        money = FormatLargeNumber(floor(money / 100 / 100)) .. " " .. CreateAtlasMarkup("auctionhouse-icon-coin-gold")
+    end
+    return money
 end
 
 
@@ -123,9 +135,9 @@ function BetterInbox:MAIL_INBOX_UPDATE()
 
 	local txt = INBOX
 	if totalitems > numitems then
-		txt = txt .. " (".. numitems.. "/".. totalitems.. ")"
-	elseif numitems > 0 then txt = txt .. " (".. numitems.. ")" end
-	if attachments > 0 then txt = txt .. " - ".. attachments.. " items" end
+		txt = txt .. " (".. FormatLargeNumber(numitems) .. "/".. FormatLargeNumber(totalitems) .. ")"
+	elseif numitems > 0 then txt = txt .. " (".. FormatLargeNumber(numitems) .. ")" end
+	if attachments > 0 then txt = txt .. " - ".. FormatLargeNumber(attachments) .. " Items" end
 	if cash > 0 then txt = txt .. " - ".. GSC(cash) end
 	titletext:SetText(txt)
 
