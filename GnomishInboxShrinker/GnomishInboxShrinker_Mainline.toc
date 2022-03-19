@@ -1,0 +1,18 @@
+## Interface: 90200
+
+## Author: Ammo, updated by Leo
+## Title: Gnomish Inbox Shrinker
+## Notes: A simple, scrolling inbox
+## X-Credits: Ammo's BetterInbox
+## X-Icon: Interface\Icons\INV_Letter_06
+
+## LoadManagers: AddonLoader
+## X-LoadOn-Mailbox: true
+
+libs.xml
+tekScrollBar.lua
+
+locale\enUS.lua
+
+GnomishInboxShrinker.lua
+
