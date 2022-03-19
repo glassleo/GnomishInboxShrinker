@@ -5,3 +5,9 @@ This is an updated version of [Gnomish Inbox Shrinker](https://github.com/TekNoL
 Gnomish Inbox Shrinker replaces the default inbox UI with a minimalistic, scrolling list that gives you a much better overview and no paging. It also plays well with other mailbox addons, such as Postal and Favorite Contacts.
 
 ![A Shrunken Inbox](https://i.imgur.com/UMHze56.png)
+
+## Issues
+
+Please use the [issue tracker on GitHub](https://github.com/glassleo/GnomishInboxShrinker/issues) for bugs, suggestions and feature requests.
+
+Pull requests are always welcome!
