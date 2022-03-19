@@ -8,6 +8,6 @@ Gnomish Inbox Shrinker replaces the default inbox UI with a minimalistic, scroll
 
 ## Issues
 
-Please use the [issue tracker on GitHub](https://github.com/glassleo/GnomishInboxShrinker/issues) for bugs, suggestions and feature requests.
+Please use the [issue tracker](https://github.com/glassleo/GnomishInboxShrinker/issues) for bugs, suggestions and feature requests.
 
 Pull requests are always welcome!
