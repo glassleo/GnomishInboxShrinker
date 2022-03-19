@@ -29,8 +29,8 @@ local BetterInbox = LibStub("AceAddon-3.0"):NewAddon(myname, "AceEvent-3.0", "Ac
 
 local L = LibStub("AceLocale-3.0"):GetLocale(myname)
 
-local return_time_fmt     = CreateTextureMarkup(255354, 64, 64, nil, 10, 0, 1, 0, 1).."%s"
-local delete_time_fmt     = CreateTextureMarkup(255352, 64, 64, nil, 10, 0, 1, 0, 1).."%s"
+local return_time_fmt     = "%s"
+local delete_time_fmt     = "%s "..CreateAtlasMarkup("services-icon-warning", 14, 14, 0, -1)
 local _,_,auction_sold    = _G.AUCTION_SOLD_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_expired = _G.AUCTION_EXPIRED_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_won     = _G.AUCTION_WON_MAIL_SUBJECT:find("([^:]+)")
