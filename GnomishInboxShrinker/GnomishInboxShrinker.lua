@@ -255,7 +255,7 @@ function BetterInbox:SetupGUI()
 		-- Separate realm from sender name
 		local senderRealm = ""
 
-		if not sender == "Great-father Winter" then
+		if sender ~= "Great-father Winter" then
 			sender, senderRealm = strsplit("-", sender or "", 2)
 		end
 
