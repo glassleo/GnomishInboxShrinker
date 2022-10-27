@@ -118,7 +118,7 @@ function BetterInbox:MAIL_SHOW()
 end
 
 
-local titletext = InboxTitleText
+local titletext = MailFrameTitleText
 function BetterInbox:MAIL_INBOX_UPDATE()
 	-- Update title
 	local numitems, totalitems = GetInboxNumItems()
@@ -144,10 +144,6 @@ function BetterInbox:MAIL_INBOX_UPDATE()
 	titletext:SetText(txt)
 
 	self:UpdateInboxScroll()
-
-	if not justshown and (numitems + totalitems) == 0 then
-		MiniMapMailFrame:Hide() else MiniMapMailFrame:Show()
-	end
 end
 
 
@@ -294,7 +290,10 @@ function BetterInbox:SetupGUI()
 			self:SetChecked(false)
 		end
 
-		if wasRead then
+		if InboxFrame.openMailID == i then
+			self.subject:SetTextColor(1,1,1)
+			self.sender:SetTextColor(1,1,1)
+		elseif wasRead then
 			self.subject:SetTextColor(0.75,0.75,0.75)
 			self.sender:SetTextColor(0.75,0.75,0.75)
 			SetDesaturation(self.icon, 1)
@@ -322,6 +321,7 @@ function BetterInbox:SetupGUI()
 
 		row:SetCheckedTexture("Interface\\HelpFrame\\HelpFrameButton-Highlight")
 		row:GetCheckedTexture():SetTexCoord(0, 1, 0, 0.578125)
+		row:GetCheckedTexture():SetDrawLayer("BACKGROUND")
 
 		if i == 1 then row:SetPoint("TOPLEFT")
 		else row:SetPoint("TOPLEFT", rows[i-1], "BOTTOMLEFT") end
