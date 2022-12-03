@@ -36,6 +36,8 @@ local _,_,auction_expired = _G.AUCTION_EXPIRED_MAIL_SUBJECT:find("([^:]+)")
 local _,_,auction_won     = _G.AUCTION_WON_MAIL_SUBJECT:find("([^:]+)")
 
 local coin_gold, coin_silver, coin_copper = CreateAtlasMarkup("auctionhouse-icon-coin-gold"), CreateAtlasMarkup("auctionhouse-icon-coin-silver"), CreateAtlasMarkup("auctionhouse-icon-coin-copper")
+local icon_ah = CreateAtlasMarkup("Auctioneer", 20, 20)
+local icon_ac = CreateAtlasMarkup("Professions-Crafting-Orders-Icon", 20, 20)
 
 local function GSC(money)
 	if not money then return end
@@ -262,6 +264,7 @@ function BetterInbox:SetupGUI()
 		self.subject:SetText(subject)
 		self.icon:SetTexture((not isGM and packageIcon) or stationeryIcon)
 		local sender, isAH = (sender or "|cff9d9d9dUnknown|r"):gsub("Auction House", "AH")
+		sender = sender:gsub("Artisan's Consortium", icon_ac)
 		isAH = isAH > 0
 		self.sender:SetText(sender)
 		self.money:SetText(
