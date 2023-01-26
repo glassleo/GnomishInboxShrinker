@@ -1,9 +1,9 @@
-## Interface: 100002
+## Interface: 100005
 
 ## Author: Ammo, updated by Leo
 ## Title: Gnomish Inbox Shrinker
 ## Notes: A simple, scrolling inbox
-## Version: 10.0.2
+## Version: 10.0.5
 ## X-Credits: Ammo's BetterInbox
 ## X-Icon: Interface\Icons\inv_misc_molle
 
