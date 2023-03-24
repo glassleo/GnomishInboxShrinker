@@ -6,6 +6,13 @@ Gnomish Inbox Shrinker replaces the default inbox UI with a minimalistic, scroll
 
 ![A Shrunken Inbox](https://i.imgur.com/UMHze56.png)
 
+Releases can be downloaded from:
+
+- [CurseForge](https://www.curseforge.com/wow/addons/gnomish-inbox-shrinker)
+- [Wago Addons](https://addons.wago.io/addons/gnomish-inbox-shrinker)
+- [WoWInterface](https://www.wowinterface.com/downloads/info24534-GnomishInboxShrinker.html)
+- [GitHub](https://github.com/glassleo/GnomishInboxShrinker/releases)
+
 ## Issues
 
 Please use the [issue tracker](https://github.com/glassleo/GnomishInboxShrinker/issues) for bugs, suggestions and feature requests.
