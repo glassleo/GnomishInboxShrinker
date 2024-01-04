@@ -1,4 +1,4 @@
-## Interface: 90200
+## Interface: 100200
 
 ## Author: Ammo, updated by Leo
 ## Title: Gnomish Inbox Shrinker
