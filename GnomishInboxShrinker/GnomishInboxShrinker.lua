@@ -288,7 +288,7 @@ function BetterInbox:SetupGUI()
 
 		if InboxFrame.openMailID == i then
 			self:SetChecked(true)
-			SetPortraitToTexture(OpenMailFrameIcon, stationeryIcon)
+			--SetPortraitToTexture(OpenMailFrameIcon, stationeryIcon)
 		else
 			self:SetChecked(false)
 		end
